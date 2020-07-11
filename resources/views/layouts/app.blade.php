@@ -55,7 +55,7 @@
                                     @if(auth()->user()->avatar)
                                         <img src="{{ auth()->user()->avatar }}" alt="avatar" width="32" height="32" style="margin-right: 8px;">
                                     @endif
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ auth()->user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -79,7 +79,7 @@
         <main class="py-4 container">
            <div class="row">
                <div class="col-md-4">
-                   <a href="/" class="btn btn-primary form-control mb-2" >
+                   <a href="{{route('discussions.create')}}" class="btn btn-primary form-control mb-2" >
                        Create a discussion
                    </a>
                    <div class="card card-default">
@@ -134,9 +134,7 @@
         </main>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"  crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
     @yield('scripts')
 
 </body>

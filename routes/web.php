@@ -26,3 +26,12 @@ Route::get('/google/redirect', 'Auth\LoginController@handleProviderCallback');
 /* Route of channels creation deletion update   */
 
 Route::resource('channels','ChannelsController');
+
+
+/* Route of discussion creation deletion update   */
+
+Route::resource('discussions','DiscussionsController');
+
+/*..Showing discussion page..*/
+
+Route::get('/discussion/{slug}','DiscussionsController@show')->name('discussions');
