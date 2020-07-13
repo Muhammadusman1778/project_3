@@ -84,7 +84,7 @@
                    </a>
                    <div class="card card-default">
                        <div class="card-header text-center" style="text-decoration: none">
-                           <a href="/">Home</a>
+                           <a href="/forum">Home</a>
                        </div>
                        <div class="card-body">
                            <ul class="list-group">

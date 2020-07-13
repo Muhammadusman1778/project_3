@@ -35,3 +35,11 @@ Route::resource('discussions','DiscussionsController');
 /*..Showing discussion page..*/
 
 Route::get('/discussion/{slug}','DiscussionsController@show')->name('discussions');
+
+/* Handlign reply***/
+
+Route::post('/discussion/reply/{id}','ReplyHandlingController@reply')->name('discussion.reply');
+/* Handlign bestreply***/
+Route::get('/discussion/best/reply/{id}','ReplyHandlingController@best_answer')->name('discussion.bestanswer');
+/* Filtering by channel name***/
+Route::get('/channel/{slug}','DiscussionsController@channel')->name('channel');

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Channel;
 use App\Discussion;
+use App\Reply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -65,8 +67,10 @@ class DiscussionsController extends Controller
     public function show($slug)
     {
         $discussion=Discussion::where('slug',$slug)->first();
+        $bestanswer=Reply::where('best_answer',1)->first();
         return view('discussions.index')
-            ->with('discussion',$discussion);
+            ->with('discussion',$discussion)
+            ->with('bestanswer',$bestanswer);
     }
 
     /**
@@ -102,4 +106,15 @@ class DiscussionsController extends Controller
     {
         //
     }
+
+    public function channel($slug){
+
+        $channel=Channel::where('slug',$slug)->first();
+
+        return view('channel')->with('discussions',$channel->discussions()->paginate(3));
+
+
+    }
+
+
 }
