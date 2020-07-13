@@ -2,18 +2,28 @@
 
 @section('content')
 
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+            @foreach($discussions as $discussion)
+                <div class="card">
+                    <div class="card-header">
+                        <img src="{{$discussion->user->avatar}}" alt="" style="border-radius: 50px" width="40px" height="40px">
+                        <span>{{$discussion->user->name}}<b>{{$discussion->created_at->diffForHumans()}}</b></span>
+                        <a href="{{route('discussions',$discussion->slug)}}" class="btn btn-primary float-right btn-sm" style="margin-right:8px; ">view</a>
+                    </div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    <div class="card-body">
+                        <h4 class="text-center">
+                            {{$discussion->title}}
+                        </h4>
+                        <p class="text-center">
+                            {{Str::limit($discussion->content,50)}}
+                        </p>
 
-                    You are logged in!
+                    </div>
+                    <div class="card-footer">
+
+                    </div>
                 </div>
-            </div>
+
+        @endforeach
 
 @endsection
