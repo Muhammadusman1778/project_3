@@ -8,6 +8,14 @@
             <span>
                 {{$discussion->user->name}}
             </span>
+            @if($discussion->is_being_watch_by_auth_user())
+            <a href="{{route('discussion.unwatch',$discussion->id)}}" class="btn btn-danger btn-sm float-right">unwatch</a>
+
+            @else
+
+            <a href="{{route('discussion.watch',$discussion->id)}}" class="btn btn-primary btn-sm float-right">watch</a>
+
+                @endif
         </div>
         <div class="card-body">
          <h4 class="text-center">
@@ -74,8 +82,17 @@
            </div>
 
            <div class="card-footer">
-               <a href="/" class="btn btn-danger btn-sm">Like</a>
-               <a href="/" class="btn btn-primary btn-sm">Unlike</a>
+               @if($reply->is_liked_by_auth_user())
+               <a href="{{route('reply.unlike',$reply->id)}}" class="btn btn-danger btn-sm">
+                   Unlike <span class="badge">{{$reply->likes->count()}}</span>
+               </a>
+                   @else
+
+                   <a href="{{route('reply.like',$reply->id)}}" class="btn btn-primary btn-sm">
+                       Like <span class="badge">{{$reply->likes->count()}}</span>
+                   </a>
+
+                   @endif
            </div>
 
        </div>

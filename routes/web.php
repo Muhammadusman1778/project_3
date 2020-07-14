@@ -43,3 +43,23 @@ Route::post('/discussion/reply/{id}','ReplyHandlingController@reply')->name('dis
 Route::get('/discussion/best/reply/{id}','ReplyHandlingController@best_answer')->name('discussion.bestanswer');
 /* Filtering by channel name***/
 Route::get('/channel/{slug}','DiscussionsController@channel')->name('channel');
+
+/* Creating like route***/
+Route::get('/reply/like/{id}','LikesHandlingController@like')->name('reply.like');
+
+/* Creating unlike route***/
+Route::get('/reply/unlike/{id}','LikesHandlingController@unlike')->name('reply.unlike');
+
+
+Route::get('/discussion/watch/{id}','WatcherHandlingController@watch')->name('discussion.watch');
+
+/* Creating unlike route***/
+Route::get('/discussion/unwatch/{id}','WatcherHandlingController@unwatch')->name('discussion.unwatch');
+
+
+
+
+
+
+
+

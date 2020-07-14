@@ -29,5 +29,23 @@ class UsersTableSeeder extends Seeder
             'admin'=>0,
             'avatar'=>asset('avatar/avatar.png')
         ]);
+
+        User::create([
+
+            'name'=>'hamza',
+            'password'=>bcrypt('admin'),
+            'email'=>'hamza@friend.com.pk',
+            'admin'=>0,
+            'avatar'=>asset('avatar/avatar.png')
+        ]);
+
+        User::create([
+
+            'name'=>'majid',
+            'password'=>bcrypt('admin'),
+            'email'=>'majid@friend.com.pk',
+            'admin'=>0,
+            'avatar'=>asset('avatar/avatar.png')
+        ]);
     }
 }
