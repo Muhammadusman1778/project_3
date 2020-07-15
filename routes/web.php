@@ -55,6 +55,10 @@ Route::get('/discussion/watch/{id}','WatcherHandlingController@watch')->name('di
 
 /* Creating unlike route***/
 Route::get('/discussion/unwatch/{id}','WatcherHandlingController@unwatch')->name('discussion.unwatch');
+/* Editing the discussion***/
+Route::get('/discussions/edit/{slug}','DiscussionsController@edit')->name('discussions.edit');
+/* Updating the discussion***/
+Route::post('/discussions /update/{id}','DiscussionsController@update')->name('discussion.update');
 
 
 

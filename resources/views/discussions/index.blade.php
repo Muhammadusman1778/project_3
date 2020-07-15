@@ -8,14 +8,56 @@
             <span>
                 {{$discussion->user->name}}
             </span>
+
+
+            @if(Auth::id()==$discussion->user->id)
+
+                @if(!$discussion->has_best_answer())
+                    <a href="{{route('discussions.edit',$discussion->slug)}}" class="btn btn-sm btn-info float-right" style="margin-right: 9px">
+                        Edit
+                    </a>
+                @endif
+
+
+                @endif
+
+
+
+
             @if($discussion->is_being_watch_by_auth_user())
-            <a href="{{route('discussion.unwatch',$discussion->id)}}" class="btn btn-danger btn-sm float-right">unwatch</a>
+            <a href="{{route('discussion.unwatch',$discussion->id)}}" class="btn btn-danger btn-sm float-right">
+                unwatch
+            </a>
 
             @else
 
-            <a href="{{route('discussion.watch',$discussion->id)}}" class="btn btn-primary btn-sm float-right">watch</a>
+            <a href="{{route('discussion.watch',$discussion->id)}}" class="btn btn-primary btn-sm float-right">
+                watch
+            </a>
 
                 @endif
+
+
+            @if($discussion->has_best_answer())
+                <span class="btn btn-danger btn-sm float-right" style="margin-right: 8px">
+                    closed
+                </span>
+
+            @else
+
+                <span class="btn btn-primary btn-sm float-right">
+                    open
+                </span>
+
+            @endif
+
+
+
+
+
+
+
+
         </div>
         <div class="card-body">
          <h4 class="text-center">
@@ -70,9 +112,13 @@
                <span>
                 {{$reply->user->name}}
             </span>
-               <a href="{{route('discussion.bestanswer',$reply->id)}}" class="btn btn-sm btn-info float-right" style="margin-left: 8px">
-                   Mark as best answer
-               </a>
+               @if(!$bestanswer)
+
+                   <a href="{{route('discussion.bestanswer',$reply->id)}}" class="btn btn-sm btn-info float-right" style="margin-left: 8px">
+                       Mark as best answer
+                   </a>
+
+                   @endif
            </div>
            <div class="card-body">
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Channel;
 use App\Discussion;
 use App\Reply;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -67,7 +68,8 @@ class DiscussionsController extends Controller
     public function show($slug)
     {
         $discussion=Discussion::where('slug',$slug)->first();
-        $bestanswer=Reply::where('best_answer',1)->first();
+        $bestanswer=$discussion->replies()->where('best_answer',1)->first();
+      // dd($bestanswer);
         return view('discussions.index')
             ->with('discussion',$discussion)
             ->with('bestanswer',$bestanswer);
@@ -79,9 +81,12 @@ class DiscussionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($slug){
+
+        return view('discussions.edit',['discussion'=>Discussion::where('slug',$slug)->first()]);
+
+
+
     }
 
     /**
@@ -91,9 +96,16 @@ class DiscussionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update($id){
+        $this->validate(request(),[
+            'content'=>'required'
+        ]);
+        $discussion=Discussion::find($id);
+        // e dd($discussion->id);
+        $discussion->content=request()->content;
+        $discussion->save();
+        session()->flash('success','Discussion Updated');
+        return redirect(route('discussions',$discussion->slug));
     }
 
     /**

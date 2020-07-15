@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Discussion;
+use App\Notifications\NewReplyAdded;
 use App\Reply;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class ReplyHandlingController extends Controller
 {
@@ -11,13 +15,24 @@ class ReplyHandlingController extends Controller
 
       //  dd(request()->content);
 
-        Reply::create([
+        $d=Discussion::find($id);
+
+        //dd($watchers);
+
+       Reply::create([
 
             'content'=>request()->content,
             'discussion_id'=>$id,
             'user_id'=>auth()->user()->id,
 
         ]);
+        $watchers=array();
+        foreach ($d->watchers as $watcher):
+            array_push($watchers,User::find($watcher->user_id));
+        endforeach;
+
+
+        Notification::send($watchers,new NewReplyAdded($d));
 
         session()->flash('success','Replied to discussion');
         return redirect()->back();
