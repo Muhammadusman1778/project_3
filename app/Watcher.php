@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace DiscussionForum;
 
 use Illuminate\Database\Eloquent\Model;
 

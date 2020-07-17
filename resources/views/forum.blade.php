@@ -8,6 +8,23 @@
                         <img src="{{$discussion->user->avatar}}" alt="" style="border-radius: 50px" width="40px" height="40px">
                         <span>{{$discussion->user->name}}<b>{{$discussion->created_at->diffForHumans()}}</b></span>
                         <a href="{{route('discussions',$discussion->slug)}}" class="btn btn-primary float-right btn-sm" style="margin-right:8px; ">view</a>
+
+
+                        @if($discussion->has_best_answer())
+
+                            <span class="btn btn-sm btn-success float-right" style="margin-right:8px; ">closed</span>
+
+                        @else
+
+                            <span class="btn btn-sm btn-danger float-right" style="margin-right:8px; ">open</span>
+
+                        @endif
+
+
+
+
+
+
                     </div>
 
                     <div class="card-body">
@@ -28,5 +45,9 @@
                 </div>
 
         @endforeach
+
+            <div class="text-center">
+                {{$discussions->links()}}
+            </div>
 
 @endsection

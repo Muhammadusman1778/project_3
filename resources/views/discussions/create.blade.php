@@ -12,7 +12,7 @@
 
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" name="title">
+                    <input type="text" class="form-control" name="title" >
                 </div>
                <div class="form-gorup">
                    <label for="channel_id">Channel</label>

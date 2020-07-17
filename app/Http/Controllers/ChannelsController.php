@@ -1,15 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace DiscussionForum\Http\Controllers;
 
-use App\Channel;
-use App\Http\Requests\CreateChannelsRequest;
-use App\Http\Requests\UpdateChannelsRequest;
+use DiscussionForum\Channel;
+use DiscussionForum\Http\Requests\CreateChannelsRequest;
+use DiscussionForum\Http\Requests\UpdateChannelsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ChannelsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
+
     /**
      * Display a listing of the resource.
      *

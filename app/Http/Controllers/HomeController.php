@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace DiscussionForum\Http\Controllers;
 
-use App\Discussion;
+use DiscussionForum\Discussion;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -14,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+       // $this->middleware('auth');
     }
 
     /**
@@ -24,6 +26,52 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('forum')->with('discussions',Discussion::all());
+        switch (request('filter')){
+
+            case 'me':
+                $results=Discussion::where('user_id',Auth::id())->paginate(3);
+                break;
+
+            case 'solved':
+                $answered=array();
+                foreach (Discussion::all() as $discussion):
+
+                   if($discussion->has_best_answer()){
+
+                       array_push($answered,$discussion);
+
+                   }
+
+
+                    endforeach;
+
+                    $results=new Paginator($answered,3);
+
+                break;
+
+            case 'unsolved':
+                $unanswered=array();
+                foreach (Discussion::all() as $discussion):
+
+                    if(!$discussion->has_best_answer()){
+
+                        array_push($unanswered,$discussion);
+
+                    }
+
+
+                endforeach;
+
+                $results=new Paginator($unanswered,3);
+
+                break;
+            default:
+
+                $results=Discussion::orderBy('created_at','desc')->paginate(3);
+
+                break;
+
+        }
+        return view('forum')->with('discussions',$results);
     }
 }

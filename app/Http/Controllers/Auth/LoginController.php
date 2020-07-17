@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace DiscussionForum\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\User;
+use DiscussionForum\Http\Controllers\Controller;
+use DiscussionForum\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 use PHPUnit\Exception;

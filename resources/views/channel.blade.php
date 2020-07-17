@@ -28,5 +28,7 @@
         </div>
 
     @endforeach
-
+    <div class="text-center">
+        {{$discussions->links()}}
+    </div>
 @endsection

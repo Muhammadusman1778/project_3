@@ -1,6 +1,7 @@
 <?php
 
-use App\Reply;
+
+use DiscussionForum\Reply;
 use Illuminate\Database\Seeder;
 
 class ReplyTableSeeder extends Seeder

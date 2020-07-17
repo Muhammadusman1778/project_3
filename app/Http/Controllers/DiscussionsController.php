@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace DiscussionForum\Http\Controllers;
 
-use App\Channel;
-use App\Discussion;
-use App\Reply;
-use App\User;
+use DiscussionForum\Channel;
+use DiscussionForum\Discussion;
+use DiscussionForum\Reply;
+use DiscussionForum\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class DiscussionsController extends Controller
@@ -51,7 +52,8 @@ class DiscussionsController extends Controller
             'title'=>$request->title,
             'channel_id'=>$request->channel_id,
             'content'=>$request->content,
-          'slug'=>Str::slug($request->title)
+          'slug'=>Str::slug($request->title),
+          'user_id'=>Auth::id()
         ]);
 
         session()->flash('success', 'Discussion Created.');

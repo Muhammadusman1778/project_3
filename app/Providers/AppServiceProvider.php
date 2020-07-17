@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace DiscussionForum\Providers;
 
-use App\Channel;
+use DiscussionForum\Channel;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 

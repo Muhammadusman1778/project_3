@@ -1,6 +1,7 @@
 <?php
 
-use App\User;
+
+use DiscussionForum\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder

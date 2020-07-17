@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace DiscussionForum\Http\Controllers;
 
-use App\Like;
+use DiscussionForum\Like;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

@@ -10,21 +10,26 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<!--Highlight css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/atom-one-dark.min.css">
+
+
 
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/forum') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -75,6 +80,25 @@
                 </div>
             </div>
         </nav>
+        @if($errors->any())
+
+            <div class="alert alert-danger">
+
+                <ul class="list-group">
+                    @foreach($errors->all() as $error)
+
+                        <li class="list-group-item">
+                            {{$error}}
+                        </li>
+
+                    @endforeach
+
+                </ul>
+
+            </div>
+
+        @endif
+
 
         <main class="py-4 container">
            <div class="row">
@@ -89,24 +113,70 @@
                        <div class="card-body">
                            <ul class="list-group">
                                <li class="list-group-item">
-                                   <a href="/" style="text-decoration: none">My Discussions</a>
+                                   <a href="/forum?filter=me" style="text-decoration: none">My Discussions</a>
                                </li>
                                <li class="list-group-item">
-                                   <a href="/" style="text-decoration: none">Solved Discussions</a>
+                                   <a href="/forum?filter=solved" style="text-decoration: none">Solved Discussions</a>
                                </li>
                                <li class="list-group-item">
-                                   <a href="/" style="text-decoration: none">Unsolved Discussions</a>
+                                   <a href="/forum?filter=unsolved" style="text-decoration: none">Unsolved Discussions</a>
                                </li>
 
                            </ul>
                        </div>
                    </div>
 
+
+                   @if(Auth::check())
+
+                       @if(Auth::user()->admin)
+
+                           <div class="card-body">
+
+                               <ul class="list-group">
+
+
+                                       <li class="list-group-item">
+
+                                           <a href="/channels">All channels</a>
+
+                                       </li>
+
+
+                               </ul>
+
+
+                           </div>
+
+
+
+
+
+
+
+
+
+                           @endif
+
+
+
+
+
+
+                       @endif
+
+
+
+
+
+
+
+
                    <div class="card card-default">
                        <div class="card-header text-center" style="text-decoration: none">
-                           <a href="/">
+
                                Channels
-                           </a>
+
                        </div>
                        <div class="card-body">
                            <ul class="list-group">
@@ -115,7 +185,7 @@
 
                                    <li class="list-group-item">
 
-                                       <a href="/">{{$channel->title}}</a>
+                                       <a href="{{route('channel',$channel->slug)}}">{{$channel->title}}</a>
 
                                    </li>
 
@@ -135,7 +205,22 @@
     </div>
 
 
+
     @yield('scripts')
+
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+        @if(session()->has('success'))
+             // alert('something');
+                 toastr.success('{{session()->get('success')}}');
+        @endif
+    </script>
+    <!--Highlight js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+    <!--Highlight ko kaise load karte han -->
+    <script>hljs.initHighlightingOnLoad();</script>
 
 </body>
 </html>

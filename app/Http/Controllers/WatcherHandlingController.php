@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace DiscussionForum\Http\Controllers;
 
-use App\Watcher;
+use DiscussionForum\Watcher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

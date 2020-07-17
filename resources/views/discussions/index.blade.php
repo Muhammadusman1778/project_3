@@ -6,15 +6,15 @@
         <div class="card-header">
             <img src="{{$discussion->user->avatar}}"  width="40px" height="40px" style="border-radius: 50px" alt="">
             <span>
-                {{$discussion->user->name}}
+                {{$discussion->user->name}} <b>{{$discussion->user->points}}</b>
             </span>
 
 
             @if(Auth::id()==$discussion->user->id)
 
                 @if(!$discussion->has_best_answer())
-                    <a href="{{route('discussions.edit',$discussion->slug)}}" class="btn btn-sm btn-info float-right" style="margin-right: 9px">
-                        Edit
+                    <a href="{{route('discussions.edit',$discussion->slug)}}" class="btn btn-sm btn-info float-right" style="margin-left: 8px">
+                       <span> Edit</span>
                     </a>
                 @endif
 
@@ -24,32 +24,26 @@
 
 
 
-            @if($discussion->is_being_watch_by_auth_user())
-            <a href="{{route('discussion.unwatch',$discussion->id)}}" class="btn btn-danger btn-sm float-right">
-                unwatch
-            </a>
+           @if(Auth::check())
+                @if($discussion->is_being_watch_by_auth_user())
+                    <a href="{{route('discussion.unwatch',$discussion->id)}}" class="btn btn-danger btn-sm float-right" style="margin-left: 8px">
+                        unwatch
+                    </a>
 
-            @else
+                @else
 
-            <a href="{{route('discussion.watch',$discussion->id)}}" class="btn btn-primary btn-sm float-right">
-                watch
-            </a>
+                    <a href="{{route('discussion.watch',$discussion->id)}}" class="btn btn-primary btn-sm float-right" style="margin-left: 8px">
+                        watch
+                    </a>
 
                 @endif
 
 
-            @if($discussion->has_best_answer())
-                <span class="btn btn-danger btn-sm float-right" style="margin-right: 8px">
-                    closed
-                </span>
 
-            @else
+               @endif
 
-                <span class="btn btn-primary btn-sm float-right">
-                    open
-                </span>
 
-            @endif
+
 
 
 
@@ -64,23 +58,23 @@
              <b>{{$discussion->title}}</b>
          </h4>
             <p class="text-center">
-                {{$discussion->content}}
+                {!! Markdown::convertToHtml($discussion->content) !!}
             </p>
             <hr>
 
             @if($bestanswer)
-                <div class="text-center">
+                <div class="text-center" style="padding: 40px">
 
                     <h3>BEST REPLY</h3>
                     <div class="card card-default">
                         <div class="card-header">
                             <img src="{{$bestanswer->user->avatar}}"  width="40px" height="40px" style="border-radius: 50px" alt="">
                             <span>
-                         {{$bestanswer->user->name}}
+                         {{$bestanswer->user->name}} <b>{{$bestanswer->user->points}}</b>
                           </span>
                         </div>
                         <div class="card-body">
-                            {!! $bestanswer->content !!}
+                            {!! Markdown::convertToHtml($bestanswer->content) !!}
                         </div>
                     </div>
 
@@ -110,21 +104,40 @@
            <div class="card-header">
                <img src="{{$reply->user->avatar}}"  width="40px" height="40px" style="border-radius: 50px" alt="">
                <span>
-                {{$reply->user->name}}
+                {{$reply->user->name}}<b>{{$reply->user->points}}</b>
             </span>
                @if(!$bestanswer)
 
-                   <a href="{{route('discussion.bestanswer',$reply->id)}}" class="btn btn-sm btn-info float-right" style="margin-left: 8px">
-                       Mark as best answer
-                   </a>
+                   @if(Auth::id()==$discussion->user->id)
+
+                       <a href="{{route('discussion.bestanswer',$reply->id)}}" class="btn btn-sm btn-info float-right" style="margin-left: 8px">
+                           Mark as best answer
+                       </a>
 
                    @endif
+
+                   @endif
+
+               @if(Auth::id()==$reply->user->id)
+                   @if(!$reply->bestanswer)
+
+                       <a href="{{route('reply.edit',$reply->id)}}" class="btn btn-sm btn-info float-right">
+                           Edit
+                       </a>
+
+
+                       @endif
+
+
+                   @endif
+
+
+
+
            </div>
            <div class="card-body">
 
-               <p class="text-center">
-                   {{$reply->content}}
-               </p>
+               <p class="text-center"> {!! Markdown::convertToHtml($reply->content) !!}</p>
            </div>
 
            <div class="card-footer">
@@ -187,6 +200,8 @@
 
 
     </div>
+
+
 
 
     @endsection
